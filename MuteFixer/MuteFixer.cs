@@ -12,7 +12,7 @@ namespace MuteFixer
     name = "MuteFixer",
     description = "Fix persistant mute",
     id = "sanyae2439.MuteFixer",
-    version = "1.0",
+    version = "2.0",
     SmodMajor = 3,
     SmodMinor = 5,
     SmodRevision = 0
@@ -39,6 +39,10 @@ namespace MuteFixer
     {
         public void OnPlayerJoin(PlayerJoinEvent ev)
         {
+            if(MuteHandler.QueryPersistantMute(ev.Player.SteamId))
+            {
+                (ev.Player.GetGameObject() as UnityEngine.GameObject).GetComponent<CharacterClassManager>().NetworkMuted = true;
+            }
             Timing.RunCoroutine(this._DelayedForceSyncMute(), Segment.FixedUpdate);
         }
 
